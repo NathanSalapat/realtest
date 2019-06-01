@@ -28,7 +28,7 @@ function realtest.register_ore(name, OreDef)
 	for i, wherein in ipairs(ore.wherein) do
 		local wherein_ = wherein:gsub(":","_")
 		local wherein_textures = {}
-		if minetest.registered_nodes[wherein].tiles or minetest.registered_nodes[wherein].tile_images then
+		if minetest.registered_nodes[wherein].tiles or minetest.registered_nodes[wherein].tiles then
 			for _, texture in ipairs(minetest.registered_nodes[wherein].tiles) do
 				table.insert(wherein_textures, texture.."^"..name_..".png")
 			end
@@ -133,7 +133,7 @@ ores.desc_list = {
 }
 
 for _, ore in ipairs(ores.list) do
-	realtest.register_ore("ores:"..ore, {description = ores.desc_list[_]}) 
+	realtest.register_ore("ores:"..ore, {description = ores.desc_list[_]})
 end
 
 realtest.register_ore("ores:native_copper", {
@@ -179,7 +179,7 @@ realtest.register_ore("ores:graphite", {
 minetest.register_node("ores:sulfur", {
 	description = "Sulfur Ore",
 	drawtype = "signlike",
-	tile_images = {"ores_sulfur.png"},
+	tiles = {"ores_sulfur.png"},
 	particle_image = {"minerals_sulfur.png"},
 	paramtype = "light",
 	paramtype2 = "wallmounted",
@@ -204,7 +204,7 @@ minetest.register_node("ores:sulfur", {
 
 minetest.register_node("ores:peat", {
 	description = "Peat",
-	tile_images = {"ores_peat.png"},
+	tiles = {"ores_peat.png"},
 	particle_image = {"ores_peat.png"},
 	groups = {crumbly=3,drop_on_dig=1,falling_node=1},
 	sounds = default.node_sound_dirt_defaults(),

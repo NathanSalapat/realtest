@@ -8,12 +8,12 @@ local directions = {
 }
 
 local function update_pane(pos)
-	if minetest.env:get_node(pos).name:find("xpanes:pane") == nil then
+	if minetest.get_node(pos).name:find("xpanes:pane") == nil then
 		return
 	end
 	local sum = 0
 	for i = 1, 4 do
-		local node = minetest.env:get_node({x = pos.x + directions[i].x, y = pos.y + directions[i].y, z = pos.z + directions[i].z})
+		local node = minetest.get_node({x = pos.x + directions[i].x, y = pos.y + directions[i].y, z = pos.z + directions[i].z})
 		if minetest.registered_nodes[node.name].walkable ~= false then
 			sum = sum + 2 ^ (i - 1)
 		end
@@ -21,7 +21,7 @@ local function update_pane(pos)
 	if sum == 0 then
 		sum = 15
 	end
-	minetest.env:add_node(pos, {name = "xpanes:pane_"..sum})
+	minetest.add_node(pos, {name = "xpanes:pane_"..sum})
 end
 
 local function update_nearby(pos)
@@ -71,7 +71,7 @@ for i = 1, 15 do
 	end
 	minetest.register_node("xpanes:pane_"..i, {
 		drawtype = "nodebox",
-		tile_images = {"xpanes_white.png", "xpanes_white.png", texture},
+		tiles = {"xpanes_white.png", "xpanes_white.png", texture},
 		paramtype = "light",
 		groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3,drop_on_dig=1},
 		drop = "xpanes:pane",
@@ -89,7 +89,7 @@ end
 
 minetest.register_node("xpanes:pane", {
 	description = "Glass Pane",
-	tile_images = {"xpanes_space.png"},
+	tiles = {"xpanes_space.png"},
 	inventory_image = "xpanes_pane.png",
 	wield_image = "xpanes_pane.png",
 	node_placement_prediction = "",

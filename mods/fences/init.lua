@@ -6,18 +6,18 @@ local directions = {
 }
 
 local function update_fence(pos)
-	if minetest.get_node_group(minetest.env:get_node(pos).name, "fence") ~= 1 then
+	if minetest.get_item_group(minetest.get_node(pos).name, "fence") ~= 1 then
 		return
 	end
 	local sum = 0
 	for i = 1, 4 do
-		local node = minetest.env:get_node({x = pos.x + directions[i].x, y = pos.y + directions[i].y, z = pos.z + directions[i].z})
+		local node = minetest.get_node({x = pos.x + directions[i].x, y = pos.y + directions[i].y, z = pos.z + directions[i].z})
 		if minetest.registered_nodes[node.name].walkable ~= false then
 			sum = sum + 2 ^ (i - 1)
 		end
 	end
-	local material = realtest.registered_trees_list[minetest.get_node_group(minetest.env:get_node(pos).name, "material")]:remove_modname_prefix()
-	minetest.env:add_node(pos, {name = "fences:"..material.."_fence_"..sum})
+	local material = realtest.registered_trees_list[minetest.get_item_group(minetest.get_node(pos).name, "material")]:remove_modname_prefix()
+	minetest.add_node(pos, {name = "fences:"..material.."_fence_"..sum})
 end
 
 local function update_nearby(pos)
@@ -56,7 +56,7 @@ for j, tree_name in ipairs(realtest.registered_trees_list) do
 
 		minetest.register_node("fences:"..tree.name:remove_modname_prefix().."_fence_"..i, {
 			drawtype = "nodebox",
-			tile_images = {tree.textures.planks},
+			tiles = {tree.textures.planks},
 			paramtype = "light",
 			groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,drop_on_dig=1,fence=1,material=j},
 			sunlight_propagates = true,
@@ -76,7 +76,7 @@ for j, tree_name in ipairs(realtest.registered_trees_list) do
 	minetest.register_node("fences:"..tree.name:remove_modname_prefix().."_fence", {
 		description = tree.description.." Fence",
 		drawtype = "nodebox",
-		tile_images = {tree.textures.planks},
+		tiles = {tree.textures.planks},
 		paramtype = "light",
 		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,drop_on_dig=1,fence=1,material=j},
 		sunlight_propagates = true,

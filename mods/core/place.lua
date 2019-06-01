@@ -6,11 +6,11 @@ function minetest.item_place_node(itemstack, placer, pointed_thing)
 	end
 
 	local under = pointed_thing.under
-	local oldnode_under = minetest.env:get_node(under)
+	local oldnode_under = minetest.get_node(under)
 	local olddef_under = ItemStack({name=oldnode_under.name}):get_definition()
 	olddef_under = olddef_under or minetest.nodedef_default
 	local above = pointed_thing.above
-	local oldnode_above = minetest.env:get_node(above)
+	local oldnode_above = minetest.get_node(above)
 	local olddef_above = ItemStack({name=oldnode_above.name}):get_definition()
 	olddef_above = olddef_above or minetest.nodedef_default
 
@@ -32,8 +32,8 @@ function minetest.item_place_node(itemstack, placer, pointed_thing)
 
 	minetest.log("action", placer:get_player_name() .. " places node "
 		.. def.name .. " at " .. minetest.pos_to_string(place_to))
-	
-	local oldnode = minetest.env:get_node(place_to)
+
+	local oldnode = minetest.get_node(place_to)
 	local newnode = {name = def.name, param1 = 0, param2 = 0}
 
 	-- Calculate direction for wall mounted stuff like torches and signs
@@ -46,7 +46,7 @@ function minetest.item_place_node(itemstack, placer, pointed_thing)
 		newnode.param2 = minetest.dir_to_wallmounted(dir)
 	-- Calculate the direction for furnaces and chests and stuff
 	elseif def.paramtype2 == 'facedir' then
-		local placer_pos = placer:getpos()
+		local placer_pos = placer:get_pos()
 		if placer_pos then
 			local dir = {
 				x = above.x - placer_pos.x,
@@ -59,7 +59,7 @@ function minetest.item_place_node(itemstack, placer, pointed_thing)
 	end
 
 	-- Add node and update
-	minetest.env:add_node(place_to, newnode)
+	minetest.add_node(place_to, newnode)
 
 	local take_item = true
 
